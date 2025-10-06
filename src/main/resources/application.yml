@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: goslint_judge_movil_backend
+  datasource:
+    url: jdbc:postgresql://localhost:5432/goslint_judge
+    username: postgresql
+    password: 1414
+  jpa:
+    hibernate:
+      # TEMPORAL: usar 'update' para que cree las tablas faltantes la primera vez.
+      # Luego de creada la base estable, volver a 'validate' o introducir Flyway.
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  sql:
+    init:
+      mode: always  # ejecutar data.sql en cada arranque (solo para desarrollo)
+server:
+  port: 8080
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql: trace
