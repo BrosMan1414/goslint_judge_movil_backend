@@ -2,9 +2,18 @@ spring:
   application:
     name: goslint_judge_movil_backend
   datasource:
-    url: jdbc:postgresql://localhost:5432/goslint_judge
-    username: postgresql
+    url: jdbc:postgresql://localhost:5432/goslint_judge_movil_backend
+    username: postgres
     password: 1414
+  docker:
+    compose:
+      enabled: false  # Desactiva el auto-arranque de Docker Compose para evitar fallos si Docker no está disponible
+  # Clave para OpenRouter: se lee de variable de entorno OPENROUTER_API_KEY si existe
+  # o del propio archivo si defines openrouter.api.key aquí.
+  # Recomendado: usar variable de entorno y no commitear secretos.
+openrouter:
+  api:
+    key: ${OPENROUTER_API_KEY:}
   jpa:
     hibernate:
       # TEMPORAL: usar 'update' para que cree las tablas faltantes la primera vez.

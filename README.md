@@ -1,3 +1,35 @@
+## Retroalimentación IA (OpenRouter)
+
+Endpoints:
+- POST `/api/retroalimentacion/ia/{envioId}`: genera y guarda una retroalimentación IA para el envío indicado.
+- GET `/api/retroalimentacion/ia/ultimo/{envioId}`: devuelve el último comentario IA guardado para ese envío.
+
+Configuración de la clave (recomendado usar variable de entorno):
+
+Windows PowerShell
+```
+$env:OPENROUTER_API_KEY = "<TU_CLAVE_OPENROUTER>"
+```
+
+Arrancar la app:
+```
+.\mvnw.cmd spring-boot:run
+```
+
+Probar endpoints:
+```
+# Listar envíos
+Invoke-RestMethod -Uri "http://localhost:8080/api/envios" -Method GET
+
+# Generar retro IA para envioId=123
+Invoke-RestMethod -Uri "http://localhost:8080/api/retroalimentacion/ia/123" -Method POST
+
+# Ver último comentario IA para envioId=123
+Invoke-RestMethod -Uri "http://localhost:8080/api/retroalimentacion/ia/ultimo/123" -Method GET
+```
+
+Nota: Si no se define `OPENROUTER_API_KEY`, el servicio usa un modo demo local para facilitar pruebas sin red.
+
 # Goslint Judge Móvil Backend
 
 Backend Spring Boot para la plataforma de juzgado de problemas de programación orientada a uso móvil. Proporciona:
