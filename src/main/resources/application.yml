@@ -2,24 +2,31 @@ spring:
   application:
     name: goslint_judge_movil_backend
   datasource:
-    url: jdbc:postgresql://localhost:5432/goslint_judge
-    username: postgresql
-    password: 1414
+    # Host de DB configurable por env: DB_HOST=postgres en Docker; localhost por defecto
+    url: jdbc:postgresql://${DB_HOST:localhost}:5432/goslintdb
+    username: ${SPRING_DATASOURCE_USERNAME:goslint}
+    # Toma SPRING_DATASOURCE_PASSWORD si existe; si no, POSTGRES_PASSWORD; si no, 'changeme'
+    password: ${SPRING_DATASOURCE_PASSWORD:${POSTGRES_PASSWORD:changeme}}
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      # TEMPORAL: usar 'update' para que cree las tablas faltantes la primera vez.
-      # Luego de creada la base estable, volver a 'validate' o introducir Flyway.
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-  sql:
-    init:
-      mode: always  # ejecutar data.sql en cada arranque (solo para desarrollo)
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
+    show-sql: false
 server:
-  port: 8080
+  port: ${SERVER_PORT:8080}
 logging:
   level:
-    org.hibernate.SQL: debug
-    org.hibernate.type.descriptor.sql: trace
+    org.hibernate.SQL: info
+    org.hibernate.type.descriptor.sql: warn
+
+# Perfil para tests locales: usa 'localhost' como host de la base de datos
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:postgresql://localhost:5432/goslintdb
+    username: ${SPRING_DATASOURCE_USERNAME:goslint}
+    password: ${SPRING_DATASOURCE_PASSWORD:${POSTGRES_PASSWORD:changeme}}
+    driver-class-name: org.postgresql.Driver

@@ -82,7 +82,64 @@ Actualmente:
 
 > También existen endpoints GET/PUT/DELETE estándar en algunas entidades (equipos, problemas, envíos, maratones) según los controladores creados.
 
-## Ejemplos de Prueba (curl)
+A
+## Despliegue en Oracle Cloud con Docker Compose
+
+### Requisitos previos
+- VM Oracle Cloud (Ubuntu 22.04/Oracle Linux 9)
+- Docker y Docker Compose instalados
+
+### Instalación rápida
+```bash
+# Instalar Docker y Docker Compose
+curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh
+sudo usermod -aG docker $USER
+# (Cierra sesión y vuelve a entrar para aplicar el grupo)
+
+# Clonar el repositorio
+sudo apt install -y git
+git clone <URL_DEL_REPO>
+cd goslint_judge_movil_backend
+
+# Configura la contraseña de Postgres en un archivo .env
+cat <<EOF > .env
+POSTGRES_PASSWORD=tu_password_segura
+EOF
+
+# Levanta los servicios
+sudo docker compose up -d --build
+```
+
+### Variables importantes
+- POSTGRES_PASSWORD: contraseña segura para la base de datos
+- SPRING_DATASOURCE_URL, SPRING_DATASOURCE_USERNAME, SPRING_DATASOURCE_PASSWORD: se configuran automáticamente por Docker Compose
+
+### Acceso
+- Backend: http://<IP_VM>:8080
+- Postgres: puerto 5432 (solo si lo expones)
+
+### Notas de seguridad
+- Cambia la contraseña por defecto en `.env`
+- No expongas el puerto 5432 a internet si no es necesario
+- Usa HTTPS en producción (Nginx + Certbot recomendado)
+
+### Migraciones y datos iniciales
+- El backend crea las tablas automáticamente (`ddl-auto: update`)
+- No se ejecuta `data.sql` en producción
+
+### Logs y monitoreo
+- Revisa logs con:
+```bash
+sudo docker compose logs backend
+```
+- Para ver logs de Postgres:
+```bash
+sudo docker compose logs postgres
+```
+
+---
+
+¿Dudas? Revisa el compose.yaml y application.yml para personalizar tu despliegue.
 Ajusta IDs según tu seed actual.
 
 Registrar equipo:

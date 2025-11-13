@@ -1,9 +1,45 @@
 services:
   postgres:
-    image: 'postgres:latest'
+    image: 'postgres:16'
+    restart: always
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
-    ports:
-      - '5432:5432'
+      POSTGRES_DB: goslintdb
+      POSTGRES_USER: goslint
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
+    # No exponemos el puerto 5432 para evitar conflictos. Si necesitas acceso externo,
+    # descomenta lo siguiente y usa un puerto de host libre, por ejemplo 55432:5432
+    # ports:
+    #   - '55432:5432'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+      build: .
+      restart: always
+      environment:
+        DB_HOST: postgres
+        SPRING_DATASOURCE_USERNAME: goslint
+        SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+        SPRING_JPA_HIBERNATE_DDL_AUTO: update
+        SPRING_PROFILES_ACTIVE: prod
+      depends_on:
+        postgres:
+          condition: service_healthy
+      networks:
+        - backend
+      ports:
+        - '8080:8080'
+
+volumes:
+  postgres_data:
+
+networks:
+  backend:
