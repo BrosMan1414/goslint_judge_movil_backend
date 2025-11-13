@@ -66,10 +66,10 @@ public class RetroalimentacionIAService {
         ChatRequest request = new ChatRequest(
             "openai/gpt-4o-mini",
             java.util.List.of(
-                new ChatMessage("system", "Eres un asistente experto en programación competitiva. Devuelve retroalimentación clara, breve y accionable."),
+                new ChatMessage("system", "Eres un asistente experto en programación competitiva para hispanohablantes. Responde SOLO en español y usa este formato:\n- Resumen (1 línea)\n- Diagnóstico (1-2 bullets)\n- Sugerencias (2-5 bullets, cada una inicia con verbo en infinitivo)\n- Próximo paso (1 línea). No repitas frases previas."),
                 new ChatMessage("user", prompt)
             ),
-            0.2
+            0.25
         );
 
         Mono<ChatResponse> response = openRouterWebClient.post()

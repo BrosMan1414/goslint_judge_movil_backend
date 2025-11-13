@@ -2,9 +2,9 @@ spring:
   application:
     name: goslint_judge_movil_backend
   datasource:
-    url: jdbc:postgresql://localhost:5432/goslint_judge_movil_backend
-    username: postgres
-    password: 1414
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:goslintdb}
+    username: ${SPRING_DATASOURCE_USERNAME:goslint}
+    password: ${SPRING_DATASOURCE_PASSWORD:${POSTGRES_PASSWORD:changeme}}
   docker:
     compose:
       enabled: false  # Desactiva el auto-arranque de Docker Compose para evitar fallos si Docker no está disponible
@@ -20,6 +20,14 @@ openrouter:
     show-sql: false
 server:
   port: ${SERVER_PORT:8080}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
 logging:
   level:
     org.hibernate.SQL: info

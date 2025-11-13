@@ -11,4 +11,6 @@ public interface RetroalimentacionRepository extends JpaRepository<Retroalimenta
     List<Retroalimentacion> findByEnvio_Id(Long envioId);
 
     Optional<Retroalimentacion> findTopByEnvio_IdAndTipoOrderByFechaDesc(Long envioId, TipoRetro tipo);
+
+    List<Retroalimentacion> findTop5ByEnvio_Equipo_IdAndEnvio_Problema_Maraton_IdAndTipoOrderByFechaDesc(Long equipoId, Long maratonId, TipoRetro tipo);
 }

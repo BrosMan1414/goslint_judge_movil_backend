@@ -30,6 +30,25 @@ public class Problema {
     @Column(name="limite_memoria", nullable=false)
     private Integer limiteMemoria;
 
+    // --- Campos para problemas importados de plataformas externas (Codeforces, etc.) ---
+    @Column(name = "source_platform", length = 50)
+    private String sourcePlatform; // ej: "codeforces"
+
+    @Column(name = "external_id", length = 50)
+    private String externalId; // ej: "4A" (contestId+index) o solo index
+
+    @Column(name = "source_url", length = 255)
+    private String sourceUrl; // URL al problema oficial
+
+    @Column(name = "difficulty")
+    private Integer difficulty; // rating Codeforces (ej: 800, 1000)
+
+    @Column(name = "tags", columnDefinition = "TEXT")
+    private String tags; // JSON string: ["implementation","math"]
+
+    @Column(name = "summary", columnDefinition = "TEXT")
+    private String summary; // Resumen corto propio, no el enunciado completo para evitar copyright
+
     @Column(name="fecha_creacion")
     private LocalDateTime fechaCreacion;
 

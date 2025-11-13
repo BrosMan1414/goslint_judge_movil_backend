@@ -7,4 +7,5 @@ import java.util.List;
 public interface EnvioRepository extends JpaRepository<Envio, Long> {
     List<Envio> findByEquipo_Id(Long equipoId);
     List<Envio> findByProblema_Id(Long problemaId);
+    List<Envio> findByEquipo_IdAndProblema_Maraton_Id(Long equipoId, Long maratonId);
 }

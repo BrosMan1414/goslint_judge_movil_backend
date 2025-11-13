@@ -1,0 +1,14 @@
+target/
+.git/
+.gitignore
+.idea/
+.vscode/
+*.iml
+Dockerfile*
+compose.yaml
+README.md
+DataBase.sql
+INSERTS.sql
+*.log
+node_modules/
+**/.DS_Store
