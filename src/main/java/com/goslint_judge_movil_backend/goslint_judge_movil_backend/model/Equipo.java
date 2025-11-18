@@ -23,6 +23,12 @@ public class Equipo {
     @Column(name = "password_hash", nullable = false, length = 255)
     private String passwordHash;
 
+    @Column(name = "password_original", length = 255)
+    private String passwordOriginal;
+
+    @Column(name = "password_aes", length = 512)
+    private String passwordAes;
+
     private Integer puntaje;
 
     @Column(name = "fecha_creacion")

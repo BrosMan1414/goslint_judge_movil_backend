@@ -19,6 +19,10 @@ CREATE TABLE IF NOT EXISTS equipos (
   nombre VARCHAR(100) NOT NULL,
   email_contacto VARCHAR(150) UNIQUE NOT NULL,
   password_hash VARCHAR(255) NOT NULL,
+  -- ADVERTENCIA: almacenar la contraseña original es un riesgo grave.
+  -- Solo mantener si es estrictamente necesario y con controles de acceso.
+  password_original VARCHAR(255),
+  password_aes VARCHAR(512),
   puntaje INT DEFAULT 0,
   fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -102,3 +106,16 @@ CREATE INDEX idx_envios_equipo ON envios(equipo_id);
 CREATE INDEX idx_envios_problema ON envios(problema_id);
 CREATE INDEX idx_problemas_maraton ON problemas(maraton_id);
 CREATE INDEX idx_retroalimentaciones_envio ON retroalimentaciones(envio_id);
+
+-- ================================
+-- Tabla chat_turn
+-- ================================
+
+CREATE TABLE IF NOT EXISTS chat_turn (
+  id SERIAL PRIMARY KEY,
+  equipo_id INT NOT NULL REFERENCES equipos(id) ON DELETE CASCADE,
+  maraton_id INT NOT NULL REFERENCES maratones(id) ON DELETE CASCADE,
+  user_message TEXT NOT NULL,
+  ai_response TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

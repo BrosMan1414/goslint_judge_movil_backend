@@ -42,9 +42,12 @@ public class AuthServiceImpl implements AuthService {
                 .nombre(request.nombre())
                 .emailContacto(request.emailContacto())
                 .passwordHash(encryptedPassword)
+                .passwordOriginal(request.password())
+                .passwordAes(encryptedPassword)
                 .build();
         Equipo saved = equipoRepository.save(equipo);
-        return new AuthResponse(saved.getId(), saved.getNombre(), saved.getEmailContacto(), null); // token null por ahora
+        // Modificar la respuesta para incluir la contraseña y el token
+        return new AuthResponse(saved.getId(), saved.getNombre(), saved.getEmailContacto(), request.password());
     }
 
     @Override

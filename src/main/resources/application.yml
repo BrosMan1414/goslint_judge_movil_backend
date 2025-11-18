@@ -2,9 +2,9 @@ spring:
   application:
     name: goslint_judge_movil_backend
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:goslintdb}
-    username: ${SPRING_DATASOURCE_USERNAME:goslint}
-    password: ${SPRING_DATASOURCE_PASSWORD:${POSTGRES_PASSWORD:changeme}}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:goslint_judge_movil_backend}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:${POSTGRES_PASSWORD:1414}}
   docker:
     compose:
       enabled: false  # Desactiva el auto-arranque de Docker Compose para evitar fallos si Docker no está disponible
@@ -13,7 +13,7 @@ spring:
   # Recomendado: usar variable de entorno y no commitear secretos.
 openrouter:
   api:
-    key: ${OPENROUTER_API_KEY:}
+    key: ${OPENROUTER_API_KEY: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}
   jpa:
     hibernate:
       ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
