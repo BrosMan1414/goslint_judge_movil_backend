@@ -1,0 +1,9 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----< com.goslint_judge_movil_backend:goslint_judge_movil_backend >-----
+[INFO] Building goslint_judge_movil_backend 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.5.6:run (default-cli) > test-compile @ goslint_judge_movil_backend >>>
+¨Desea terminar el trabajo por lotes (S/N)? 

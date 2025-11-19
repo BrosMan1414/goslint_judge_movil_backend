@@ -13,7 +13,7 @@ spring:
   # Recomendado: usar variable de entorno y no commitear secretos.
 openrouter:
   api:
-    key: ${OPENROUTER_API_KEY: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}
+    key: ${OPENROUTER_API_KEY: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}
   jpa:
     hibernate:
       ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
